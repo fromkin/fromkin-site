@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 文本即数据 · 计算政治学</title>
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:#faf8f4;color:#1d1a16;font-family:"Noto Serif SC","Songti SC","SimSun",serif;line-height:1.95}
+.wrap{max-width:740px;margin:0 auto;padding:2.2rem 1.25rem 4rem}
+.top{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:.85rem;color:#8a8175;margin-bottom:2.2rem}
+.top a{color:#8a8175;text-decoration:none}
+.top a:hover{color:#b4552d}
+h1{font-size:1.65rem;line-height:1.5;margin:.2rem 0 1.6rem;font-weight:700}
+h2{font-size:1.22rem;margin:2.2rem 0 .8rem;line-height:1.6}
+h3{font-size:1.08rem;margin:1.8rem 0 .6rem}
+p{margin:0 0 1.05rem;text-align:justify}
+table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.92rem;line-height:1.7}
+td{border:1px solid #ddd5c7;padding:.45rem .6rem;vertical-align:top}
+sup.fnref a{color:#b4552d;text-decoration:none;font-size:.78em}
+.notes{margin-top:3rem;border-top:1px solid #e3dccd;padding-top:1rem;font-size:.88rem;line-height:1.8;color:#4a443c}
+.notes h2{font-size:1rem;margin:.2rem 0 .6rem}
+.notes ol{margin:0;padding-left:1.4rem}
+.notes li{margin-bottom:.35rem}
+.nav{margin-top:3rem;padding-top:1.2rem;border-top:1px solid #e3dccd;display:flex;justify-content:space-between;gap:1rem;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:.92rem}
+.nav a{color:#b4552d;text-decoration:none}
+.foot{margin-top:2.4rem;color:#a39a8b;font-size:.8rem;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.toc{list-style:none;margin:1.4rem 0;padding:0;font-size:1.02rem}
+.toc li{border-bottom:1px solid #eee6d8;padding:.55rem 0}
+.toc a{color:#1d1a16;text-decoration:none}
+.toc a:hover{color:#b4552d}
+.abstract{background:#fff;border:1px solid #eee6d8;border-radius:10px;padding:1.2rem 1.3rem;margin:1.4rem 0}
+.meta{color:#8a8175;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:.88rem}
+
+  .wrap img { max-width: 100%; height: auto; display: block; margin: 14px auto; }
+  h2.part { color: #8a5a12; border-bottom: 1px dashed #d8c391; padding-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><a href="index.html">Fromkin</a> · <a href="s32.html">计算政治学</a></div>
+<h1>第4章 文本即数据</h1>
+<h2><strong>4.1 把文字变成数字</strong></h2>
+<p>政治是&quot;说&quot;出来的：议会辩论、政府工作报告、新闻评论、领导人讲话。传统政治学者靠精读这些文本，一辈子能读多少？几千份文件顶天了。但一个国家的议会记录，一年就有几十万页。</p>
+<p>&quot;文本即数据&quot;的思想是：把文字变成计算机能处理的数字，然后让机器替我们&quot;读&quot;。不是让机器理解文章的美感，而是让机器数出规律：哪些词出现得多？哪些词总是一起出现？不同阵营的用词有什么差别？</p>
+<p>这一章讲四种基本方法：词频、主题模型、情感分析、词嵌入。都不讲数学，只讲思想。</p>
+<h2><strong>4.2 词频与关键词：最笨也最有用的方法</strong></h2>
+<p>最简单的方法就是数词。把一篇文章里每个词出现的次数数出来，就是&quot;词频&quot;。听起来很笨，但很有用。</p>
+<p>比如，你想知道某位领导人的讲话重点是什么变化。把他十年来的讲话按年份排好，每年数一数&quot;改革&quot;&quot;稳定&quot;&quot;发展&quot;&quot;安全&quot;这几个词出现的次数，画成曲线。曲线的起伏，就是政治风向的晴雨表。这种分析，人工做要几个月，机器几分钟。</p>
+<p>进阶一点是&quot;关键词提取&quot;：自动找出最能代表一篇文章的词。原理是：如果一个词在这篇文章里出现很多，但在别的文章里很少见，那它就是关键词。比如在一堆政府工作报告里，&quot;供给侧&quot;这个词突然冒出来，就说明有新政策动向。</p>
+<p>词频方法的局限：它只数&quot;出现了&quot;，不管&quot;怎么用的&quot;。&quot;我支持改革&quot;和&quot;我反对改革&quot;，&quot;改革&quot;都算一次。所以词频是粗糙的，但粗糙不等于没用——很多时候，粗糙的规律恰恰是最 robust 的。</p>
+<h2><strong>4.3 主题模型：让机器自己找话题</strong></h2>
+<p>如果有一万份文件，你想知道&quot;大家都在讨论哪几个话题&quot;，人工分类要累死。主题模型（比如LDA）能让机器自动把文件聚成几个&quot;主题&quot;。</p>
+<p>思想是这样的：假设每篇文章都是几个主题混合而成的。比如一篇新闻，70%讲经济、20%讲外交、10%讲社会。每个主题又对应一拨爱一起出现的词：&quot;经济&quot;主题下，&quot;增长、投资、就业&quot;经常一起出现；&quot;外交&quot;主题下，&quot;访问、会谈、协议&quot;经常一起出现。机器通过&quot;哪些词总是一起出现&quot;这个线索，反推出背后有几个主题、每个主题是哪些词。</p>
+<p>实际应用：研究者用主题模型分析过美国国会的全部辩论记录，发现两党在&quot;税收&quot;&quot;医保&quot;等议题上的话题分布随时间分化——这是&quot;政治极化&quot;的文本证据。</p>
+<p>主题模型的麻烦：机器找出的&quot;主题&quot;只是&quot;经常一起出现的词&quot;，至于这个主题到底是什么意思，得人来解释。解释错了，结论就错了。所以主题模型是&quot;人机合作&quot;：机器聚类，人来命名。</p>
+<h2><strong>4.4 情感分析：测量态度的温度计</strong></h2>
+<p>情感分析是判断一段文字是正面还是负面的技术。最简单的做法是查&quot;情感词典&quot;：把&quot;好&quot;&quot;优秀&quot;&quot;支持&quot;标为正面词，把&quot;坏&quot;&quot;糟糕&quot;&quot;反对&quot;标为负面词，数一数文章里正负词的比例。</p>
+<p>复杂一点用机器学习：先给机器看几千条人工标注好&quot;正面/负面&quot;的帖子，让它自己学会判断，再去判断新的帖子。</p>
+<p>政治学里的应用：分析社交媒体上对候选人的情感，辅助预测选举；分析新闻报道的情感倾向，检验媒体有没有偏向性；分析议会辩论的情感烈度，测量政治极化的温度。</p>
+<p>但情感分析有个大坑：反讽。&quot;这政策可真&#x27;好&#x27;啊&quot;，机器很可能判成正面。中文网络的阴阳怪气，更是情感分析的噩梦。所以情感分析的结果要谨慎解读，最好配合人工抽查。</p>
+<h2><strong>4.5 词嵌入：词也有&quot;朋友圈&quot;</strong></h2>
+<p>词嵌入（word2vec）的思想很漂亮：一句话可以概括——&quot;看一个词的朋友圈，就知道它是什么意思。&quot;</p>
+<p>具体说：如果&quot;国王&quot;和&quot;王后&quot;经常出现在相似的语境里（&quot;国王下令&quot;&quot;王后下令&quot;），机器就把它们在数学空间里放得很近。训练完之后，每个词变成一串数字（向量），意思相近的词，数字也相近。神奇的是，向量之间还能做算术：&quot;国王&quot;减去&quot;男&quot;加上&quot;女&quot;，得到的结果最接近&quot;王后&quot;。</p>
+<p>政治学里用它来做什么？研究概念的变化。比如&quot;民主&quot;这个词，在1950年代的报纸和2020年代的报纸里，&quot;朋友圈&quot;一样吗？如果它的邻居从&quot;选举、自由&quot;变成了&quot;稳定、民生&quot;，那就说明话语变了。这种&quot;词义漂移&quot;分析，是思想史研究的新武器。</p>
+<h2><strong>4.6 中文分词的特殊性</strong></h2>
+<p>中文文本分析有个英文没有的坎：分词。英文天然有空格，中文没有。&quot;研究生命科学&quot;可以切成&quot;研究/生命/科学&quot;，也可以切成&quot;研究生/命/科学&quot;——意思完全不同。</p>
+<p>现代分词工具准确率已经很高，但政治文本里有很多新词、专有名词（人名、机构名、政策新词），机器没见过就容易切错。切错了，后面的词频、主题全受影响。</p>
+<p>还有一个中文特有的现象：网络新词和&quot;黑话&quot;层出不穷，词典永远跟不上。今天的热词，明天就过时了。做中文文本分析，分词词典要经常更新，这是体力活，也是基本功。</p>
+<h2><strong>4.7 词典方法进阶：自己编词典</strong></h2>
+<p>前面讲的情感词典是现成的，但现成词典在政治文本里常常失灵。比如&quot;斗争&quot;这个词，在日常语境里偏负面，在政治话语里可能是中性甚至正面的（&quot;开展反腐败斗争&quot;）。&quot;维稳&quot;在官方话语和民间话语里的感情色彩完全不同。</p>
+<p>所以研究者常常&quot;自己编词典&quot;：针对特定议题，人工标注一批词的情感或立场，再让机器去数。比如研究&quot;民粹主义话语&quot;，先定义什么是民粹话语的关键词（&quot;人民&quot;&quot;精英&quot;&quot;腐败&quot;&quot;夺回&quot;），编成词典，再去测量不同政客讲话里民粹词汇的密度。</p>
+<p>自编词典的好处是贴合研究问题，坏处是主观——词典编得不同，结论就不同。所以论文里要公开词典，让别人能检验。这是计算政治学的通用规矩：方法透明，才能服人。</p>
+<h2><strong>4.8 大语言模型：文本分析的新玩家</strong></h2>
+<p>2022年之后，ChatGPT这样的大语言模型入场，文本分析变天了。以前的流程是：分词→词频→主题→情感，一步一步来。现在可以直接问模型：&quot;这篇文章的立场是左还是右？&quot;&quot;这段话的情感是正面还是负面？&quot;&quot;把这十万份文件按话题分类。&quot;</p>
+<p>大模型的好处是理解语境：它能看懂反讽，能处理没见过的新词，中文分词的很多坑它直接跨过去了。初步研究表明，大模型在文本分类任务上，已经接近甚至超过训练有素的人工标注员。【学界研究】</p>
+<p>但问题也不少。第一，贵且慢：分析百万级文档，成本很高。第二，不稳定：同一个问题问两遍，答案可能不一样，科学研究要求可重复，这就尴尬了。第三，黑箱：模型为什么这么判，说不清楚。第四，偏见：模型的训练数据本身就有偏见，它会继承甚至放大这些偏见。</p>
+<p>【分析推演】未来几年，文本分析很可能变成&quot;大模型打底、传统方法验证&quot;的混合模式：用大模型快速探索和标注，用传统可解释的方法做最终的科学论证。完全抛弃传统方法还为时过早。</p>
+<h2><strong>4.9 一个完整的文本研究长什么样</strong></h2>
+<p>串一个例子：研究&quot;中国地方政府工作报告的重点变迁&quot;。</p>
+<p>第一步，收集：从各省政府网站下载过去二十年的政府工作报告，几百份文件。第二步，清洗：转成纯文本，分词，去掉停用词（&quot;的&quot;&quot;了&quot;&quot;在&quot;这些没意义的词）。第三步，词频：每年数&quot;经济&quot;&quot;环保&quot;&quot;民生&quot;&quot;安全&quot;等关键词的频率，画曲线。第四步，主题模型：让机器自动发现报告里有几个大话题，看话题权重随时间怎么变。第五步，解读：曲线拐点对应什么年份？那年发生了什么大事？第六步，验证：人工抽查几十份报告，看机器的结论靠不靠谱。</p>
+<p>你看，流程是&quot;机器干粗活，人干细活&quot;。机器负责规模，人负责意义。这个分工，是整个计算政治学的方法论缩影。</p>
+<h2><strong>4.10 立场检测与框架分析：比情感更进一步</strong></h2>
+<p>情感分析只分&quot;正面/负面&quot;，但政治文本更需要知道&quot;支持谁、反对谁&quot;。这叫&quot;立场检测&quot;：同样是谈医保，A说&quot;全民医保是进步&quot;，B说&quot;全民医保是灾难&quot;——情感都强烈，但立场相反。</p>
+<p>更进一步是&quot;框架分析&quot;：同样一件事，不同的&quot;讲法&quot;。比如移民议题，可以讲成&quot;经济框架&quot;（移民抢工作），也可以讲成&quot;人道框架&quot;（难民很可怜），还可以讲成&quot;安全框架&quot;（移民带来犯罪）。框架不同，公众的态度就不同。政治斗争，很大程度上是&quot;框架之争&quot;：谁定义了问题的讲法，谁就赢了一半。</p>
+<p>计算方法可以大规模测量框架：先人工定义几种框架的关键词，编成词典，再去数不同媒体、不同政客用哪种框架多。研究发现，美国两党在移民、枪支等议题上，用的框架系统性不同——这就是极化的语言学证据。【学界研究】</p>
+<h2><strong>4.11 跨语言文本分析：比较的野心</strong></h2>
+<p>政治学是比较的学问：比较各国议会的辩论，比较各国媒体的报道。但文本分析遇到多语言就麻烦了：中文的词频和英文的词频，怎么比？</p>
+<p>三种办法。第一，翻译：把所有文本翻译成一种语言再分析。简单粗暴，但翻译会丢失微妙含义。第二，多语言词嵌入：让机器把不同语言的词放进同一个数学空间，&quot;民主&quot;和&quot;democracy&quot;自动靠拢。这样就可以跨语言比较词义了。第三，人工编码框架：先定义好要比较的维度（比如&quot;民族主义话语强度&quot;），每种语言单独训练分类器，再比较分类结果。</p>
+<p>跨语言分析是前沿，也是深坑：语言背后的文化差异，很难用数学抹平。同样是&quot;自由&quot;这个词，在中文和英文语境里的含义就不完全一样。做跨语言比较，语言学家和政治学者得一起上。</p>
+<h2><strong>4.12 测量&quot;忽悠指数&quot;：文本复杂度分析</strong></h2>
+<p>文本还能测量&quot;说话人想不想让你听懂&quot;。政治人物的讲话，有时候是故意讲得云山雾罩的。</p>
+<p>语言学家发明了&quot;可读性公式&quot;：根据句子长度、词汇难度，给文本打分，分数越低越难懂。研究者拿这个公式去测各国领导人的讲话，发现了一个规律：竞选时讲话越来越简单（要让所有人听懂），执政后越来越复杂（要让反对者抓不住把柄）。【学界研究】</p>
+<p>中文里也有类似研究：分析政府工作报告的&quot;虚词密度&quot;——&quot;的&quot;&quot;了&quot;&quot;着&quot;这些虚词越多，句子越绕。还有研究数&quot;新词密度&quot;：新概念、新提法越多，说明政策转向越大。这些都是把&quot;文风&quot;变成&quot;数据&quot;的尝试。</p>
+<p>当然，简单不等于真诚，复杂不等于忽悠。但文风的变化，确实是政治风向的蛛丝马迹。读讲话稿时，除了看&quot;说了什么&quot;，也可以看看&quot;怎么说的&quot;。</p>
+<h2><strong>4.13 谁的声音被记录：文本数据的沉默</strong></h2>
+<p>文本分析有个根本局限：它只能分析&quot;被写下来的&quot;东西。而政治里最重要的东西，常常没写下来。</p>
+<p>议会辩论记录了，但闭门会议没记录；新闻报道了街头抗议，但没报道饭桌上的交易；社交媒体记录了网民的情绪，但没记录不上网的老人的想法。文本数据是&quot;幸存者&quot;的记录，沉默的大多数不在文本里。</p>
+<p>更微妙的是&quot;自我审查&quot;：在言论受限的环境里，人们说话会自我设限。分析这种环境下的文本，测出来的是&quot;能说的话&quot;，不是&quot;想说的话&quot;。研究者必须时刻提醒自己：文本是哈哈镜，照出的是扭曲的现实。</p>
+<p>所以文本分析的结论，永远要配一句限定：&quot;在现有文本的范围内&quot;。超出这个范围，就是过度解读。这是诚实学者的自我修养。</p>
+<h2><strong>4.14 图像与视频也是数据：多模态分析</strong></h2>
+<p>文本之外，政治还有大量图像和视频：竞选海报、新闻照片、领导人讲话视频、抗议现场的直播。这些也能变成数据，叫&quot;多模态分析&quot;。</p>
+<p>图像分析能做什么？比如分析竞选海报：候选人的着装、表情、背景，传递了什么信号？研究者用图像识别批量分析，发现女性候选人的海报更强调&quot;亲和力&quot;（微笑、家庭），男性候选人更强调&quot;力量感&quot;（西装、握拳）——这是性别政治的视觉证据。【学界研究】</p>
+<p>视频分析更进一步：分析领导人讲话的面部表情、语调、手势。心理学研究发现，选民对候选人的第一印象，几秒钟就形成了，而且主要来自外表而非内容——&quot;以貌取人&quot;是有科学依据的。【学界研究】</p>
+<p>技术上，图像视频分析靠计算机视觉：人脸识别、表情识别、物体检测。但伦理问题比文本更尖锐：分析公众人物的公开影像没问题，分析普通抗议者的人脸就可能带来迫害。用之前，先过伦理关。</p>
+<p>【分析推演】随着短视频成为主要政治传播渠道，多模态分析会越来越重要。未来的政治学者，可能一半时间在&quot;看&quot;视频，而不是&quot;读&quot;文字。</p>
+<h2><strong>4.15 读心术的边界：文本分析的伦理</strong></h2>
+<p>文本分析越强大，伦理问题越尖锐。机器读文本，某种程度上是在&quot;读心&quot;：从你说的话，推测你的立场、情绪、甚至人格。</p>
+<p>剑桥分析公司的&quot;心理画像&quot;就是例子：从脸书点赞记录，推测你的性格（外向还是内向、开放还是保守），准确率高得吓人。然后按性格推送不同的政治广告：对&quot;神经质&quot;的人推送恐惧，对&quot;开放性&quot;的人推送希望。同样的候选人，不同的人看到不同的&quot;他&quot;。【公开案例】</p>
+<p>这带来三个伦理问题。第一，知情同意：用户点赞时，没同意被&quot;读心&quot;。第二，操纵：按性格定制的政治广告，算不算操纵？广告一直存在，但&quot;千人千面&quot;的精准操纵是新东西。第三，歧视：文本分析可能复制社会偏见。比如用简历文本预测工作表现，模型可能学会歧视某些群体——因为它从历史数据里学到了历史的偏见。</p>
+<p>学界的应对：研究伦理审查越来越严，涉及个人文本数据的研究要过伦理关；技术上发展&quot;公平机器学习&quot;，试图纠正偏见。但根本的紧张关系解不开：文本分析越有用，滥用的诱惑越大。</p>
+<p>给普通人的建议：你在网上说的每一句话，都可能成为别人的数据。不是让你不说话，而是让你知道&quot;被读&quot;的可能，说话时多一分自觉。数字时代，沉默也是一种权利。</p>
+<h2><strong>4.16 动手：分析一句话的立场</strong></h2>
+<p>不用电脑，做一次&quot;人工文本分析&quot;，体会机器在干什么。</p>
+<p>找三句话，分别来自不同立场的人谈同一个政策（比如&quot;延迟退休&quot;）。比如：A说&quot;延迟退休是应对老龄化的必要之举&quot;；B说&quot;延迟退休是让打工人多干几年&quot;；C说&quot;延迟退休政策需要配套保障&quot;。</p>
+<p>第一步，词频：三句话各用了哪些关键词？A的关键词是&quot;应对、老龄化、必要&quot;，B是&quot;打工人、多干&quot;，C是&quot;配套、保障&quot;。第二步，立场：A支持，B反对，C中立偏建设性。你是怎么判断的？靠的是&quot;必要之举&quot;（正面）、&quot;多干几年&quot;（负面抱怨）、&quot;需要配套&quot;（条件支持）这些线索——这就是人工版的情感+立场分析。第三步，框架：A用的是&quot;国家大局框架&quot;，B用的是&quot;打工人利益框架&quot;，C用的是&quot;政策完善框架&quot;。</p>
+<p>你刚才做的，就是机器要做的事，只不过机器一次做一百万句。理解了人工的流程，就理解了机器的流程——所有的文本分析方法，都是把人的阅读直觉&quot;机械化&quot;。 mechanize 之后，规模上去了，微妙之处下来了。这就是 trade-off，无处不在。</p>
+<h2><strong>本章小结</strong></h2>
+<p>&quot;文本即数据&quot;就是把文字变成数字让机器读。词频数&quot;出现了什么&quot;，主题模型找&quot;在讨论哪几个话题&quot;，情感分析测&quot;态度是正是负&quot;，词嵌入看&quot;词的朋友圈&quot;从而追踪词义变化。中文分析要先过分词这一关。每种方法都有坑：词频不管语境，主题要人来命名，情感怕反讽。记住：机器是放大镜，不是水晶球。</p>
+<div class="nav"><a href="s32-04.html">← 上一部分</a><a href="s32.html">目录</a><a href="s32-06.html">下一部分 →</a></div>
+<div class="foot">Fromkin · fromkin.dpdns.org</div>
+</div>
+</body>
+</html>
