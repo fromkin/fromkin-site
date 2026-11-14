@@ -9,32 +9,23 @@
   body {
     font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
     background: linear-gradient(160deg, #0f2027 0%, #203a43 55%, #2c5364 100%);
-    color: #f5f7fa;
-    min-height: 100vh;
-    padding: 56px 24px 64px;
+    color: #f5f7fa; min-height: 100vh; padding: 56px 24px 64px;
   }
   .card { max-width: 620px; margin: 0 auto; text-align: center; }
-  .mark {
-    width: 72px; height: 72px; margin: 0 auto 28px;
-    border: 2px solid rgba(255,255,255,.55); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 30px; font-weight: 600; letter-spacing: 1px;
-  }
+  .mark { width: 72px; height: 72px; margin: 0 auto 28px; border: 2px solid rgba(255,255,255,.55); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 600; letter-spacing: 1px; }
   h1 { font-size: 42px; font-weight: 600; letter-spacing: 2px; margin-bottom: 14px; }
   .domain { font-size: 17px; color: #9fd8e8; letter-spacing: 1px; margin-bottom: 30px; }
   .line { width: 44px; height: 2px; background: rgba(255,255,255,.4); margin: 0 auto 30px; }
   p.intro { font-size: 16px; line-height: 1.9; color: rgba(245,247,250,.85); }
   .works { margin-top: 44px; border-top: 1px solid rgba(255,255,255,.18); padding-top: 30px; text-align: left; }
   .works .wk { font-size: 12px; letter-spacing: 3px; color: rgba(245,247,250,.5); margin-bottom: 16px; text-align: center; }
-  .works .bt { font-size: 21px; font-weight: 600; line-height: 1.6; text-align: center; }
+  .works .bt { font-size: 21px; font-weight: 600; line-height: 1.6; text-align: center; margin-top: 34px; }
+  .works .bt.first { margin-top: 0; }
   .works .bt a { color: #f5f7fa; text-decoration: none; }
   .works .bs { margin-top: 8px; font-size: 13.5px; color: rgba(245,247,250,.65); line-height: 1.7; text-align: center; }
-  .toc { list-style: none; margin-top: 22px; }
+  .toc { list-style: none; margin-top: 18px; }
   .toc li { border-bottom: 1px solid rgba(255,255,255,.12); }
-  .toc a {
-    display: block; padding: 10px 6px; color: rgba(245,247,250,.92);
-    text-decoration: none; font-size: 15.5px; line-height: 1.6;
-  }
+  .toc a { display: block; padding: 10px 6px; color: rgba(245,247,250,.92); text-decoration: none; font-size: 15.5px; line-height: 1.6; }
   .toc a:hover { color: #9fd8e8; }
   .foot { margin-top: 44px; font-size: 13px; color: rgba(245,247,250,.45); letter-spacing: 1px; text-align: center; }
 </style>
@@ -48,7 +39,7 @@
     <p class="intro">这里是 Fromkin 的个人主页。<br>刚刚安家落户，正在慢慢布置。</p>
     <div class="works">
       <div class="wk">作 品</div>
-      <div class="bt"><a href="book.html">中国经济的结构转型：制度激励、资产负债表与发展约束</a></div>
+      <div class="bt first"><a href="book.html">中国经济的结构转型：制度激励、资产负债表与发展约束</a></div>
       <div class="bs">学术研究工作稿 · 2026年11月整理 · 全书二十四部分，逐章发布</div>
       <ul class="toc">
         <li><a href="ch01.html">引言　研究问题与解释策略</a></li>
@@ -75,6 +66,27 @@
         <li><a href="ch22.html">第十九章　结论与后续研究议程</a></li>
         <li><a href="ch23.html">参考文献</a></li>
         <li><a href="ch24.html">待补充的文献与数据</a></li>
+      </ul>
+      <div class="bt"><a href="llm.html">大模型是怎样建成的</a></div>
+      <div class="bs">从基础原理一直讲到 Agent · 前言＋十五章＋结语，逐章发布</div>
+      <ul class="toc">
+        <li><a href="m01.html">前言：人人都在用的东西，是怎样建成的</a></li>
+        <li><a href="m02.html">第一章 一切从语言开始：文字怎样变成数字</a></li>
+        <li><a href="m03.html">第二章 会学习的机器：神经网络与训练的基本功</a></li>
+        <li><a href="m04.html">第三章 注意力：Transformer 如何改变一切</a></li>
+        <li><a href="m05.html">第四章 预训练：把互联网读一遍</a></li>
+        <li><a href="m06.html">第五章 数据：模型的粮食从哪里来</a></li>
+        <li><a href="m07.html">第六章 算力与系统：万卡集群怎样协同</a></li>
+        <li><a href="m08.html">第七章 规模定律：大到什么程度会&quot;涌现&quot;</a></li>
+        <li><a href="m09.html">第八章 对齐：从&quot;会说话&quot;到&quot;听指挥&quot;</a></li>
+        <li><a href="m10.html">第九章 推理：模型回答问题时在发生什么</a></li>
+        <li><a href="m11.html">第十章 让模型看懂世界：多模态是怎样拼出来的</a></li>
+        <li><a href="m12.html">第十一章 变小、变快、变便宜：压缩与部署</a></li>
+        <li><a href="m13.html">第十二章 记忆与检索：给模型外接一个大脑</a></li>
+        <li><a href="m14.html">第十三章 动手能力：工具调用与函数调用</a></li>
+        <li><a href="m15.html">第十四章 Agent：从回答问题到把事办完</a></li>
+        <li><a href="m16.html">第十五章 检验与约束：评测、安全与治理</a></li>
+        <li><a href="m17.html">结语：建成之后</a></li>
       </ul>
     </div>
     <div class="foot">EST. 2026 · SINCE NOV 14, 2026</div>
