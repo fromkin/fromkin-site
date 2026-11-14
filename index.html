@@ -11,13 +11,9 @@
     background: linear-gradient(160deg, #0f2027 0%, #203a43 55%, #2c5364 100%);
     color: #f5f7fa;
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 24px;
+    padding: 56px 24px 64px;
   }
-  .card { max-width: 560px; }
+  .card { max-width: 620px; margin: 0 auto; text-align: center; }
   .mark {
     width: 72px; height: 72px; margin: 0 auto 28px;
     border: 2px solid rgba(255,255,255,.55); border-radius: 50%;
@@ -27,18 +23,20 @@
   h1 { font-size: 42px; font-weight: 600; letter-spacing: 2px; margin-bottom: 14px; }
   .domain { font-size: 17px; color: #9fd8e8; letter-spacing: 1px; margin-bottom: 30px; }
   .line { width: 44px; height: 2px; background: rgba(255,255,255,.4); margin: 0 auto 30px; }
-  p { font-size: 16px; line-height: 1.9; color: rgba(245,247,250,.85); }
-  .foot { margin-top: 44px; font-size: 13px; color: rgba(245,247,250,.45); letter-spacing: 1px; }
-  .works { margin-top: 40px; border-top: 1px solid rgba(255,255,255,.18); padding-top: 28px; }
-  .works .wk { font-size: 12px; letter-spacing: 3px; color: rgba(245,247,250,.5); margin-bottom: 14px; }
-  .works a.book {
-    display: block; text-decoration: none; color: #f5f7fa;
-    border: 1px solid rgba(255,255,255,.28); border-radius: 12px; padding: 18px 20px;
-    transition: border-color .2s, background .2s;
+  p.intro { font-size: 16px; line-height: 1.9; color: rgba(245,247,250,.85); }
+  .works { margin-top: 44px; border-top: 1px solid rgba(255,255,255,.18); padding-top: 30px; text-align: left; }
+  .works .wk { font-size: 12px; letter-spacing: 3px; color: rgba(245,247,250,.5); margin-bottom: 16px; text-align: center; }
+  .works .bt { font-size: 21px; font-weight: 600; line-height: 1.6; text-align: center; }
+  .works .bt a { color: #f5f7fa; text-decoration: none; }
+  .works .bs { margin-top: 8px; font-size: 13.5px; color: rgba(245,247,250,.65); line-height: 1.7; text-align: center; }
+  .toc { list-style: none; margin-top: 22px; }
+  .toc li { border-bottom: 1px solid rgba(255,255,255,.12); }
+  .toc a {
+    display: block; padding: 10px 6px; color: rgba(245,247,250,.92);
+    text-decoration: none; font-size: 15.5px; line-height: 1.6;
   }
-  .works a.book:hover { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.05); }
-  .works .bt { font-size: 19px; font-weight: 600; line-height: 1.6; letter-spacing: .5px; }
-  .works .bs { margin-top: 8px; font-size: 13.5px; color: rgba(245,247,250,.65); line-height: 1.7; }
+  .toc a:hover { color: #9fd8e8; }
+  .foot { margin-top: 44px; font-size: 13px; color: rgba(245,247,250,.45); letter-spacing: 1px; text-align: center; }
 </style>
 </head>
 <body>
@@ -47,13 +45,37 @@
     <h1>Fromkin</h1>
     <div class="domain">fromkin.dpdns.org</div>
     <div class="line"></div>
-    <p>这里是 Fromkin 的个人主页。<br>刚刚安家落户，正在慢慢布置。</p>
+    <p class="intro">这里是 Fromkin 的个人主页。<br>刚刚安家落户，正在慢慢布置。</p>
     <div class="works">
       <div class="wk">作 品</div>
-      <a class="book" href="book.html">
-        <div class="bt">中国经济的结构转型</div>
-        <div class="bs">制度激励、资产负债表与发展约束 · 学术研究工作稿<br>全书二十四部分，逐章发布中 →</div>
-      </a>
+      <div class="bt"><a href="book.html">中国经济的结构转型：制度激励、资产负债表与发展约束</a></div>
+      <div class="bs">学术研究工作稿 · 2026年11月整理 · 全书二十四部分，逐章发布</div>
+      <ul class="toc">
+        <li><a href="ch01.html">引言　研究问题与解释策略</a></li>
+        <li><a href="ch02.html">文献综述　研究传统、主要分歧与本文位置</a></li>
+        <li><a href="ch03.html">分析框架　部门联系、机制命题与证据约束</a></li>
+        <li><a href="ch04.html">第一章　增长分期、制度变迁与追赶条件</a></li>
+        <li><a href="ch05.html">第二章　投资、出口与土地融资的联动机制</a></li>
+        <li><a href="ch06.html">第三章　所有制、融资条件与企业行为</a></li>
+        <li><a href="ch07.html">第四章　财政的纵向关系与地方竞争</a></li>
+        <li><a href="ch08.html">第五章　住房、土地与家庭资产负债表</a></li>
+        <li><a href="ch09.html">第六章　地方债务与城投的边界</a></li>
+        <li><a href="ch10.html">第七章　银行体系、信用创造与融资配置</a></li>
+        <li><a href="ch11.html">第八章　汇率、资本流动与人民币</a></li>
+        <li><a href="ch12.html">第九章　制造业与全球价值链</a></li>
+        <li><a href="ch13.html">第十章　创新、产业政策与竞争</a></li>
+        <li><a href="ch14.html">第十一章　人口、就业与人力资本</a></li>
+        <li><a href="ch15.html">第十二章　城镇化、户籍与收入分配</a></li>
+        <li><a href="ch16.html">第十三章　居民消费、预防性储蓄与内需约束</a></li>
+        <li><a href="ch17.html">第十四章　能源转型与增长的资源边界</a></li>
+        <li><a href="ch18.html">第十五章　对外摩擦与供应链重构</a></li>
+        <li><a href="ch19.html">第十六章　区域差异、集聚与基本服务</a></li>
+        <li><a href="ch20.html">第十七章　金融风险与政策工具的匹配</a></li>
+        <li><a href="ch21.html">第十八章　统计口径、数据版本与证据可信度</a></li>
+        <li><a href="ch22.html">第十九章　结论与后续研究议程</a></li>
+        <li><a href="ch23.html">参考文献</a></li>
+        <li><a href="ch24.html">待补充的文献与数据</a></li>
+      </ul>
     </div>
     <div class="foot">EST. 2026 · SINCE NOV 14, 2026</div>
   </div>
